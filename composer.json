@@ -8,5 +8,11 @@
             "email": "mod@heiljo.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "autoload": {
+        "classmap": [],
+        "psr-4": {
+            "Pyrocmsapi\\": "src/"
+        }
+    }
 }
