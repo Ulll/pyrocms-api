@@ -6,7 +6,11 @@ supported pyrocms an api service
 
 ## Usage
 
-step 1. composer require papajo/pyrocms-api:^1.0 --no-scripts
+step 1. install with composer
+
+```
+composer require papajo/pyrocms-api:^1.0 --no-scripts
+```
 
 step 2. add PyrocmsapiServiceProvider to config/app.php
 
