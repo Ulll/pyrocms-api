@@ -15,3 +15,5 @@ use Illuminate\Http\Request;
 Route::get('/', function (Request $request) {
     return 'welcome to pyrocms api service';
 });
+
+Route::get('post/list', 'Entry\PostController@list')->name('postlist');
