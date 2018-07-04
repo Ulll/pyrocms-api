@@ -1,0 +1,12 @@
+{
+    "name": "papajo/pyrocms-api",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jo",
+            "email": "mod@heiljo.com"
+        }
+    ],
+    "require": {}
+}
