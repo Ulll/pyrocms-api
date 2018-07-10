@@ -16,6 +16,6 @@ Route::get('/', function (Request $request) {
     return 'welcome to pyrocms api service';
 });
 
-Route::get('post/list', 'Entry\PostController@list')->name('postlist');
+Route::get('article/list', 'Entry\PostArticleController@list')->name('articlelist');
 
-Route::get('post/{id}', 'Entry\PostController@post')->name('postdetail');
+Route::get('article/{id}', 'Entry\PostArticleController@article')->name('articledetail');

@@ -2,22 +2,26 @@
 
 namespace Pyrocmsapi\Repository;
 
-use Anomaly\PostsModule\Post\PostRepository as RepositoryPost;
-use Pyrocmsapi\Model\PostModel;
-use Anomaly\Streams\Platform\Addon\FieldType\FieldType;
-use Pyrocmsapi\FieldDataAccessor\FieldType as FieldTypeAccessor;
 use Anomaly\UsersModule\User\Contract\UserRepositoryInterface;
-use Anomaly\Streams\Platform\Model\Posts\PostsDefaultPostsEntryModel;
+use Anomaly\PostsModule\Type\Contract\TypeRepositoryInterface;
+use Anomaly\PostsModule\Post\Contract\PostRepositoryInterface;
+use Anomaly\PostsModule\Post\PostRepository as RepositoryPost;
+
+use Pyrocmsapi\Model\PostModel;
+use Anomaly\Streams\Platform\Model\Posts\PostsArticlePostsEntryModel;
+
+use Anomaly\Streams\Platform\Addon\FieldType\FieldType;
+use Anomaly\FilesModule\File\Contract\FileInterface;
 use Anomaly\FilesModule\File\FileCollection;
 use Anomaly\FilesModule\File\FileModel;
-use Anomaly\FilesModule\File\Contract\FileInterface;
+
 use Illuminate\Http\Request;
 use Pyrocmsapi\Traits\JsonSizes;
 
 /**
  * API专用的post repository
  */
-class PostRepository extends RepositoryPost
+class PostArticleRepository extends RepositoryPost implements PostRepositoryInterface
 {
     use JsonSizes;
 
@@ -35,15 +39,22 @@ class PostRepository extends RepositoryPost
     protected $request;
 
     /**
+     * the post type
+     * @var [type]
+     */
+    protected $type;
+
+    /**
      * Create a new PostRepository instance.
      *
      * @param PostModel $model
      */
-    public function __construct(PostModel $model, Request $request)
+    public function __construct(PostModel $model, Request $request, TypeRepositoryInterface $type)
     {
         parent::__construct($model);
         $this->model = $model;
         $this->request = $request;
+        $this->type = $type->findBySlug('article');
     }
 
     /**
@@ -56,7 +67,7 @@ class PostRepository extends RepositoryPost
     {
         $limit = $this->request->get('limit');
         $ret = [];
-        $items = $this->getRecent($limit);
+        $items = $this->findManyByType($this->type, $limit);
         //获取ORM对象数组
         $items = $items->items();
         foreach ($items as $item) {
@@ -81,12 +92,12 @@ class PostRepository extends RepositoryPost
         //获取PostDefaultPostModel
         $entryCollection = $post->entry()->get();
         $entryCollection = $entryCollection->filter(function($item){
-            if ($item instanceof PostsDefaultPostsEntryModel) {
+            if ($item instanceof PostsArticlePostsEntryModel) {
                 return $item;
             }
         });
         $entry = $entryCollection[0];
-
+        
         $result['cover_image'] = new \stdClass;
         //处理封面
         if (method_exists($entry, 'coverImage')) {
