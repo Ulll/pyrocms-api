@@ -2,10 +2,15 @@
 
 namespace Pyrocmsapi\Http\Controllers\Entry;
 
-use Anomaly\Streams\Platform\Http\Controller\PublicController;
-use Anomaly\PostsModule\Post\Contract\PostRepositoryInterface;
+use Pyrocmsapi\Repository;
 
-class PostController extends PublicController
+use Pyrocmsapi\Model\PostModel;
+
+use Anomaly\Streams\Platform\Http\Controller\ResourceController;
+// use Anomaly\PostsModule\Post\Contract\PostRepositoryInterface;
+use Pyrocmsapi\Repository\PostRepository;
+
+class PostController extends ResourceController
 {
 
     /**
@@ -13,8 +18,13 @@ class PostController extends PublicController
      * @method list
      * @return null|\Symfony\Component\HttpFoundation\Response
      */
-    public function list(PostRepositoryInterface $posts)
+    public function list(PostRepository $posts)
     {
-        return $posts->getRecent($this->request->get('limit'));
+        return $posts->getIndexList($this->request->get('limit'));
+    }
+
+    public function post(PostRepository $posts, $id)
+    {
+        return $posts->find($id);
     }
 }

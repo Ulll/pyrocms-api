@@ -17,3 +17,5 @@ Route::get('/', function (Request $request) {
 });
 
 Route::get('post/list', 'Entry\PostController@list')->name('postlist');
+
+Route::get('post/{id}', 'Entry\PostController@post')->name('postdetail');
