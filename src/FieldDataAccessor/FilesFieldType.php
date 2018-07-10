@@ -20,7 +20,6 @@ class FilesFieldType extends FieldType
     public function getData()
     {
         $FileCollection = $this->fieldType->getRelation()->get();
-
         $newData = $FileCollection->map(function (FileInterface $file) {
             return $this->getSizeFile($file);
         });
