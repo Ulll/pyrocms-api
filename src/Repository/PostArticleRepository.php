@@ -5,7 +5,7 @@ namespace Pyrocmsapi\Repository;
 use Anomaly\UsersModule\User\Contract\UserRepositoryInterface;
 use Anomaly\PostsModule\Type\Contract\TypeRepositoryInterface;
 use Anomaly\PostsModule\Post\Contract\PostRepositoryInterface;
-use Anomaly\PostsModule\Post\PostRepository as RepositoryPost;
+use Anomaly\PostsModule\Post\PostRepository;
 
 use Pyrocmsapi\Model\PostModel;
 use Anomaly\Streams\Platform\Model\Posts\PostsArticlePostsEntryModel;
@@ -18,10 +18,11 @@ use Anomaly\FilesModule\File\FileModel;
 use Illuminate\Http\Request;
 use Pyrocmsapi\Traits\JsonSizes;
 
+
 /**
  * API专用的post repository
  */
-class PostArticleRepository extends RepositoryPost implements PostRepositoryInterface
+class PostArticleRepository extends PostRepository implements PostRepositoryInterface
 {
     use JsonSizes;
 
@@ -97,7 +98,7 @@ class PostArticleRepository extends RepositoryPost implements PostRepositoryInte
             }
         });
         $entry = $entryCollection[0];
-        
+
         $result['cover_image'] = new \stdClass;
         //处理封面
         if (method_exists($entry, 'coverImage')) {
