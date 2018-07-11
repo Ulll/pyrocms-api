@@ -32,9 +32,9 @@ class PostArticleController extends ResourceController
      */
     public function list()
     {
-        $limit  = $this->request->get('limit',10);
-        $offset = $this->request->get('offset',0);
-        return PostArticleCollection::make($this->articles->getIndexList($limit, $offset));
+        $perpage  = $this->request->get('perpage',10);
+        $page = $this->request->get('page', 1); //自动获取，不用传递到下一个函数
+        return PostArticleCollection::make($this->articles->getIndexList($perpage));
     }
 
     /**

@@ -54,15 +54,8 @@ class PostArticleRepository extends PostRepository implements PostRepositoryInte
      * @param  integer $limit 10
      * @return array
      */
-    public function getIndexList($limit, $offset)
+    public function getIndexList($perpage)
     {
-        $perpage = $limit;
-        $currentPage = intval($offset/$limit)+1;
-        return $this->model
-            ->live()
-            ->where('type_id', $this->type->getId())
-            ->skip($offset)
-            ->limit($limit)
-            ->get();
+        return $this->findManyByType($this->type, $perpage);
     }
 }
