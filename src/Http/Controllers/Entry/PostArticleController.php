@@ -19,15 +19,21 @@ class PostArticleController extends ResourceController
     /**
      * 获取post列表
      * @method list
-     * @return null|\Symfony\Component\HttpFoundation\Response
+     * @return null|PostArticleCollection
      */
     public function list()
     {
-        return new PostArticleCollection($this->articles->getIndexList());
+        return PostArticleCollection::make($this->articles->getIndexList());
     }
 
+    /**
+     * 获取文章详情
+     * @method article
+     * @param  integer  $id
+     * @return PostArticleResource
+     */
     public function article($id)
     {
-        return $this->articles->find($id);
+        return PostArticleResource::make($this->articles->find($id));
     }
 }
