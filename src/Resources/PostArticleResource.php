@@ -31,12 +31,13 @@ class PostArticleResource extends BaseResource
             'errmsg' => '',
         );
         $article['data'] = $this->filterFields([
-            'id'          => $result['id'],
-            'title'       => $result['title'],
-            'summary'     => $result['summary'],
-            'content'     => $relation['entry']['content'],
-            'author'      => $this->getAuthor($this->getFieldValue('author')),
-            'cover_image' => $this->getArticleCoverImage(),
+            'id'           => $result['id'],
+            'title'        => $result['title'],
+            'summary'      => $result['summary'],
+            'content'      => $relation['entry']['content'],
+            'author'       => $this->getAuthor($this->getFieldValue('author')),
+            'cover_image'  => $this->getArticleCoverImage(),
+            'bookmark_num' => rand(100,300),
         ]);
         return $article;
     }
@@ -118,15 +119,21 @@ class PostArticleResource extends BaseResource
             "enabled",
             "last_login_at",
             "last_activity_at",
+            'avatar',
         );
         $user = app()->make(UserRepositoryInterface::class);
         $user = $user->find($authorId);
         $udata = $user->toArray();
+
+
         foreach ($fields as $k=>$v) {
             if (array_key_exists($v, $udata)) {
                 $ret[$v] = $udata[$v];
             }
         }
+        $avatar = $user->avatar()->first();
+        $ret['avatar'] = $this->fieldDataImage($avatar);
+
         return $ret;
     }
 }
