@@ -6,14 +6,23 @@ use Anomaly\Streams\Platform\Http\Controller\ResourceController;
 use Pyrocmsapi\Repository\PostArticleRepository;
 use Pyrocmsapi\Resources\PostArticleResource;
 use Pyrocmsapi\Resources\PostArticleCollection;
+use Illuminate\Http\Request;
 
 class PostArticleController extends ResourceController
 {
     protected $articles;
 
-    public function __construct(PostArticleRepository $article)
+    /**
+     * the request object
+     * @var Request
+     */
+    protected $request;
+
+
+    public function __construct(PostArticleRepository $article, Request $request)
     {
         $this->articles = $article;
+        $this->request = $request;
     }
 
     /**
@@ -23,7 +32,9 @@ class PostArticleController extends ResourceController
      */
     public function list()
     {
-        return PostArticleCollection::make($this->articles->getIndexList());
+        $limit  = $this->request->get('limit',10);
+        $offset = $this->request->get('offset',0);
+        return PostArticleCollection::make($this->articles->getIndexList($limit, $offset));
     }
 
     /**
