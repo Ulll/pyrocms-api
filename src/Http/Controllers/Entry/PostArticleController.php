@@ -4,6 +4,8 @@ namespace Pyrocmsapi\Http\Controllers\Entry;
 
 use Anomaly\Streams\Platform\Http\Controller\ResourceController;
 use Pyrocmsapi\Repository\PostArticleRepository;
+use Pyrocmsapi\Resources\PostArticleResource;
+use Pyrocmsapi\Resources\PostArticleCollection;
 
 class PostArticleController extends ResourceController
 {
@@ -21,7 +23,7 @@ class PostArticleController extends ResourceController
      */
     public function list()
     {
-        return $this->articles->getIndexList();
+        return new PostArticleCollection($this->articles->getIndexList());
     }
 
     public function article($id)
