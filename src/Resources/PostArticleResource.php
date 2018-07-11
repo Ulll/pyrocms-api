@@ -132,7 +132,7 @@ class PostArticleResource extends BaseResource
             }
         }
         $avatar = $user->avatar()->first();
-        $ret['avatar'] = $this->fieldDataImage($avatar);
+        $ret['avatar'] = $avatar ? $this->fieldDataImage($avatar) : '';
 
         return $ret;
     }
