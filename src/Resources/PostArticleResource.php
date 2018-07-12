@@ -26,11 +26,7 @@ class PostArticleResource extends BaseResource
         $this->request = $request;
         $result        = parent::toArray($request);
         $relation      = parent::relationsToArray();
-        $article       = array(
-            'errno'  => 0,
-            'errmsg' => '',
-        );
-        $article['data'] = $this->filterFields([
+        return $this->filterFields([
             'id'           => $result['id'],
             'title'        => $result['title'],
             'summary'      => $result['summary'],
@@ -39,7 +35,6 @@ class PostArticleResource extends BaseResource
             'cover_image'  => $this->getArticleCoverImage(),
             'bookmark_num' => rand(100,300),
         ]);
-        return $article;
     }
 
     /**

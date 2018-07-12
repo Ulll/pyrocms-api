@@ -31,11 +31,8 @@ class PostArticleCollection extends ResourceCollection
     {
         $this->request = $request;
         return [
-            'errno'  => 0,
-            'errmsg' => '',
-            'data'   => $this->map(function (PostModel $resource) use ($request) {
-                $data = PostArticleResource::make($resource)->hide($this->withoutFields)->toArray($request);
-                return $data['data'];
+            'data' => $this->map(function (PostModel $resource) use ($request) {
+                return PostArticleResource::make($resource)->hide($this->withoutFields)->toArray($request);
             }),
         ];
     }

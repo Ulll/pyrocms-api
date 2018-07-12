@@ -23,8 +23,7 @@ class RouterServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
+        $this->aliasMiddleware('api.response', \Pyrocmsapi\Http\Middleware\BuildHttpResponse::class);
         parent::boot();
     }
 
@@ -51,7 +50,7 @@ class RouterServiceProvider extends ServiceProvider
     {
         Route::group(
             [
-                'middleware' => 'api',
+                'middleware' => ['api','api.response'],
                 'namespace'  => $this->namespace,
                 'prefix'     => 'api',
             ],
