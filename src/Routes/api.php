@@ -18,4 +18,6 @@ Route::get('/', function (Request $request) {
 
 Route::get('article/list', 'Entry\PostArticleController@list')->name('articlelist');
 
+Route::get('article/list/tag/{tag}', 'Entry\PostArticleController@getListBytag')->name('articlelistbytag');
+
 Route::get('article/{id}', 'Entry\PostArticleController@article')->name('articledetail');

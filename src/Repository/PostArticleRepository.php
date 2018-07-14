@@ -2,12 +2,10 @@
 
 namespace Pyrocmsapi\Repository;
 
-
-use Anomaly\PostsModule\Type\Contract\TypeRepositoryInterface;
 use Anomaly\PostsModule\Post\Contract\PostRepositoryInterface;
 use Anomaly\PostsModule\Post\PostRepository;
 
-use Pyrocmsapi\Model\PostModel;
+use Pyrocmsapi\Model\PostArticleModel;
 use Illuminate\Http\Request;
 
 
@@ -19,7 +17,7 @@ class PostArticleRepository extends PostRepository implements PostRepositoryInte
     /**
      * The post model.
      *
-     * @var PostModel
+     * @var PostArticleModel
      */
     protected $model;
 
@@ -29,33 +27,15 @@ class PostArticleRepository extends PostRepository implements PostRepositoryInte
      */
     protected $request;
 
-    /**
-     * the post type
-     * @var [type]
-     */
-    protected $type;
 
     /**
      * Create a new PostRepository instance.
      *
-     * @param PostModel $model
+     * @param PostArticleModel $model
      */
-    public function __construct(PostModel $model, Request $request, TypeRepositoryInterface $type)
+    public function __construct(PostArticleModel $model, Request $request)
     {
-        parent::__construct($model);
-        $this->model   = $model;
         $this->request = $request;
-        $this->type    = $type->findBySlug('article');
-    }
-
-    /**
-     * 获取首页文章列表
-     * @method getIndexList
-     * @param  integer $limit 10
-     * @return array
-     */
-    public function getIndexList($perpage)
-    {
-        return $this->findManyByType($this->type, $perpage);
+        $this->model   = $model;
     }
 }

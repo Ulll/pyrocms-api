@@ -33,8 +33,20 @@ class PostArticleController extends ResourceController
     public function list()
     {
         $perpage  = $this->request->get('perpage',10);
-        $page = $this->request->get('page', 1); //自动获取，不用传递到下一个函数
-        return PostArticleCollection::make($this->articles->getIndexList($perpage));
+        // $page = $this->request->get('page', 1); //自动获取，不用传递到下一个函数
+        return PostArticleCollection::make($this->articles->getRecent($perpage));
+    }
+
+    /**
+     * 获取话题文章列表
+     * @method list
+     * @return PostArticleCollection
+     */
+    public function getListBytag($tag)
+    {
+        $perpage  = $this->request->get('perpage',10);
+        // $page = $this->request->get('page', 1); //自动获取，不用传递到下一个函数
+        return PostArticleCollection::make($this->articles->findManyByTag($tag, $perpage));
     }
 
     /**

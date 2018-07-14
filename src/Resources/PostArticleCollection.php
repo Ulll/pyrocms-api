@@ -5,7 +5,7 @@ namespace Pyrocmsapi\Resources;
 use Pyrocmsapi;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Pyrocmsapi\Model\PostModel;
+use Pyrocmsapi\Model\PostArticleModel;
 use Anomaly\Streams\Platform\Model\Posts\PostsArticlePostsEntryModel;
 use Anomaly\FilesModule\File\FileModel;
 use Anomaly\FilesModule\File\FileCollection;
@@ -31,7 +31,7 @@ class PostArticleCollection extends ResourceCollection
     {
         $this->request = $request;
         return [
-            'data' => $this->map(function (PostModel $resource) use ($request) {
+            'data' => $this->map(function (PostArticleModel $resource) use ($request) {
                 return PostArticleResource::make($resource)->hide($this->withoutFields)->toArray($request);
             }),
         ];
